@@ -21,7 +21,7 @@ function create(parent, color){
     const grid = new Muuri(gridContent, {
         items: ".item",
         dragEnabled: true, 
-        dragSort: muuris,
+        dragSort: function (){return muuris},
         dragContainer:document.body,
     });
     for (var i = 0; i < Math.random()*40 ; i++) {
