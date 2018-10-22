@@ -2,6 +2,7 @@ function random_color() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ')';
 }
+
 function createItem(n, color){
    var iDiv = document.createElement('div');
    iDiv.className = "item";
@@ -11,6 +12,7 @@ function createItem(n, color){
    iDiv.appendChild(icDiv);
    return iDiv;
 }
+
 function create(parent, color){
     var gridDiv = document.createElement('div');
     gridDiv.className = "grid";
@@ -24,6 +26,15 @@ function create(parent, color){
         dragSort: function (){return muuris},
         dragContainer:document.body,
     });
+    grid.on('dragReleaseEnd', function (item) {
+        item.getElement().style.width = '';
+        item.getElement().style.height = '';
+        muuris.forEach(function (grid){
+            grid.refreshItems();
+        })
+        baseMuuri.refreshItems().layout();
+    }
+    )
     for (var i = 0; i < Math.random()*40 ; i++) {
         iDiv = createItem(i, color);
         grid.add(iDiv);
@@ -58,8 +69,4 @@ for (var i=0; i<20; i++){
     baseMuuri.add(gridDiv); 
     console.log(i);
     muuris.push(curr_grid); 
-}
-for (var j=0; j<20; j++){
-    console.log(muuris)
-    muuris[j].dragSort = function (){return muuris};    
 }
